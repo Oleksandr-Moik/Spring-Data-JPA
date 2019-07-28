@@ -23,6 +23,24 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 		exclude group: 'junit', module: 'junit'
 	}
+	
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+  compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.9'
+  
+  // https://mvnrepository.com/artifact/javax.persistence/persistence-api
+  compile group: 'javax.persistence', name: 'persistence-api', version: '1.0'
+  
+  // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+  compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.9.RELEASE'
+  
+  // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+  compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+  
+  // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+  compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.3.Final'
+  
+  // https://mvnrepository.com/artifact/junit/junit
+  testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 test {
