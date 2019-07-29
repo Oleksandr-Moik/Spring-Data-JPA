@@ -3,6 +3,9 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.devsmile'
@@ -15,10 +18,11 @@ repositories {
 }
 
 dependencies {
-	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	//runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
-	//runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'org.hibernate:hibernate-entitymanager'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 		exclude group: 'junit', module: 'junit'
@@ -28,16 +32,16 @@ dependencies {
   compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.9'
   
   // https://mvnrepository.com/artifact/javax.persistence/persistence-api
-  compile group: 'javax.persistence', name: 'persistence-api', version: '1.0'
+  //compile group: 'javax.persistence', name: 'persistence-api', version: '1.0'
   
   // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
-  compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.9.RELEASE'
+  //compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.9.RELEASE'
   
   // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-  compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+  //compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
   
   // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-  compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.3.Final'
+  //compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.3.Final'
   
   // https://mvnrepository.com/artifact/junit/junit
   testCompile group: 'junit', name: 'junit', version: '4.12'

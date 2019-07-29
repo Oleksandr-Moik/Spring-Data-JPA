@@ -1,61 +1,75 @@
 package com.devsmile.springdata.controller;
 
-import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsmile.springdata.dao.UserDAO;
 import com.devsmile.springdata.model.User;
+import com.devsmile.springdata.repository.UserRepository;
 
 @RestController
 public class MainController {
     
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
     
+    private static final String[] FNAMES = new String[] { "Smith", "Allen", "Jones" };
+    private static final String[] LNAMES = new String[] { "Clerk", "Salesman", "Manager" };
+  
     @RequestMapping("/")
-    @ResponseBody
-    public String welcome() {
-        return "Welcome to REST-Template Example.";
+//    @ResponseBody
+    public String home() {
+        String html = "";
+        html += "<ul>";
+        html += " <li><a href='/testInsert'>Test Insert</a></li>";
+        html += " <li><a href='/showAllUsers'>Show All Users</a></li>";
+        html += " <li><a href='/user/1'>Show User 1</a></li>";
+        html += "</ul>";
+        return html;
     }
     
-    @RequestMapping(value = "/user",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<User> getUsers(){
-        List<User> list = userDAO.getAllUsers();
-        return list;
-    }
-    @RequestMapping(value = "/user/{userID}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public User getUser(@PathVariable("userID")Integer userID){
-        return userDAO.getUser(userID);
+//    @ResponseBody
+    @RequestMapping("/testInsert")
+    public String testInsert() {
+ 
+//        Integer empIdMax = userRepository.getMaxId();
+//        Integer newId = empIdMax + 1;
+//        
+//        User user= new User();
+//        
+//        int random1 = new Random().nextInt(3);
+//        int random2 = new Random().nextInt(3);
+//        
+//        String firstName = FNAMES[random1];
+//        String lastName = LNAMES[random2];
+// 
+//        user.setId(newId);
+//        user.setFirstName(firstName);
+//        user.setLastName(lastName);
+//        user.setAge(new Random().nextInt(20)+15);
+//        this.userRepository.save(user);
+// 
+//        return "Inserted: " + user.toString();
+        return "Hello";
     }
     
-    @RequestMapping(value = "/user",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public User addUser(@RequestBody User user) {
-        //System.out.println("Creating user: "+user.getId());
-        return userDAO.addUser(user);
+    @RequestMapping("/showAllUsers")
+//    @ResponseBody
+    public String getUsers(){
+        Iterable<User> users = userRepository.findAll();
+        String html="";
+        for(User user:users) {
+            html+=user.toString()+"<br>";
+        }
+        return html;
     }
-   
-    @RequestMapping(value = "/user/{userID}",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public User updateUser(@PathVariable("userID")Integer userID,@RequestBody User user) {
-        //System.out.println("Editing user: "+user.getId());
-        return userDAO.updateUser(userID, user);
-    }
-
-    @RequestMapping(value = "/user/{userID}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    private void deleteUser(@PathVariable("userID")Integer userID) {
-        //System.out.println("Deleting user: "+userID);
-        userDAO.deleteUser(userID);
+    
+    @RequestMapping("/user/{id}")
+//    @ResponseBody
+    public User getUser(@PathVariable("id")Integer id){
+        return userRepository.findById(id).get();
     }
 }
