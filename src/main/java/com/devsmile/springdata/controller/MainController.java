@@ -26,18 +26,17 @@ public class MainController {
   
     @RequestMapping("/")
     public String home() {
-        String html = "Hello. It is root link of Spring";
-        return html;
+        return "Hello. It is root link of Spring";
     }
     
     @RequestMapping(value = "/user",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllUsers(){
         Iterable<User> users = repository.findAll();
-        String html="";
+        String result="";
         for(User user:users) {
-            html+=user.toString()+"<br>";
+            result+=user.toString()+"<br>";
         }
-        return html;
+        return result;
     }
     
     @RequestMapping(value = "/user/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +60,6 @@ public class MainController {
     @ResponseBody
     @RequestMapping(value = "/user/{id}",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateUser(@RequestBody User user, @PathVariable("id")Integer id) {
-        
         Optional<User> student = repository.findById(id);
         
         if (student.isPresent()) {
@@ -86,8 +84,5 @@ public class MainController {
             return result;
         }
         else return String.format("User with id %d are not finded.",id);
-       
-    }
-    
-    
+    }    
 }
