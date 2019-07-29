@@ -1,5 +1,6 @@
 package com.devsmile.springdata.controller;
 
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,10 @@ public class MainController {
     
     @RequestMapping(value = "/user/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getUserById(@PathVariable("id")Integer id){
-        return repository.findById(id).get().toString();
+        Optional<User> student = repository.findById(id);
+        
+        if (student.isPresent())return repository.findById(id).get().toString();
+        else return String.format("User with id %d are not finded.",id);
     }
     
     @ResponseBody
@@ -57,19 +61,32 @@ public class MainController {
     @ResponseBody
     @RequestMapping(value = "/user/{id}",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateUser(@RequestBody User user, @PathVariable("id")Integer id) {
-        String result="User "+id+" chenged<br>";
-        user.setId(id);
-        result+="Data before: "+repository.findById(id).get().toString()+"<br>";
-        repository.save(user);
-        result+="Data after: "+user.toString()+"<br>";
-        return result;
+        
+        Optional<User> student = repository.findById(id);
+        
+        if (student.isPresent()) {
+            String result="User "+id+" chenged<br>";
+            user.setId(id);
+            result+="Data before: "+repository.findById(id).get().toString()+"<br>";
+            repository.save(user);
+            result+="Data after: "+user.toString()+"<br>";
+            return result;
+        }
+        else return String.format("User with id %d are not finded.",id);
     }
     
     @RequestMapping(value = "/user/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteUser(@PathVariable("id")Integer id) {
-        String result="Deleted: "+repository.findById(id).get().toString();
-        repository.deleteById(id);
-        return result;
+        
+        Optional<User> student = repository.findById(id);
+        
+        if (student.isPresent()) {
+            String result="Deleted: "+repository.findById(id).get().toString();
+            repository.deleteById(id);
+            return result;
+        }
+        else return String.format("User with id %d are not finded.",id);
+       
     }
     
     
