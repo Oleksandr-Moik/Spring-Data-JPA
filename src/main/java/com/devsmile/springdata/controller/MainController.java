@@ -3,8 +3,12 @@ package com.devsmile.springdata.controller;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsmile.springdata.model.User;
@@ -14,52 +18,20 @@ import com.devsmile.springdata.repository.UserRepository;
 public class MainController {
     
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository repository;
     
-    private static final String[] FNAMES = new String[] { "Smith", "Allen", "Jones" };
-    private static final String[] LNAMES = new String[] { "Clerk", "Salesman", "Manager" };
+    private static final String[] FNAMES = new String[] { "Smith", "Allen", "Jones","John","Robert","Thomas","Mark" };
+    private static final String[] LNAMES = new String[] { "Hill", "Adams", "Perez","Morgan","Evans","Bailey","Carter" };
   
     @RequestMapping("/")
-//    @ResponseBody
     public String home() {
-        String html = "";
-        html += "<ul>";
-        html += " <li><a href='/testInsert'>Test Insert</a></li>";
-        html += " <li><a href='/showAllUsers'>Show All Users</a></li>";
-        html += " <li><a href='/user/1'>Show User 1</a></li>";
-        html += "</ul>";
+        String html = "Hello. It is root link of Spring";
         return html;
     }
     
-//    @ResponseBody
-    @RequestMapping("/testInsert")
-    public String testInsert() {
- 
-//        Integer empIdMax = userRepository.getMaxId();
-//        Integer newId = empIdMax + 1;
-//        
-//        User user= new User();
-//        
-//        int random1 = new Random().nextInt(3);
-//        int random2 = new Random().nextInt(3);
-//        
-//        String firstName = FNAMES[random1];
-//        String lastName = LNAMES[random2];
-// 
-//        user.setId(newId);
-//        user.setFirstName(firstName);
-//        user.setLastName(lastName);
-//        user.setAge(new Random().nextInt(20)+15);
-//        this.userRepository.save(user);
-// 
-//        return "Inserted: " + user.toString();
-        return "Hello";
-    }
-    
-    @RequestMapping("/showAllUsers")
-//    @ResponseBody
-    public String getUsers(){
-        Iterable<User> users = userRepository.findAll();
+    @RequestMapping(value = "/user",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAllUsers(){
+        Iterable<User> users = repository.findAll();
         String html="";
         for(User user:users) {
             html+=user.toString()+"<br>";
@@ -67,9 +39,38 @@ public class MainController {
         return html;
     }
     
-    @RequestMapping("/user/{id}")
-//    @ResponseBody
-    public User getUser(@PathVariable("id")Integer id){
-        return userRepository.findById(id).get();
+    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getUserById(@PathVariable("id")Integer id){
+        return repository.findById(id).get().toString();
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/user",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String insertUser(@RequestBody User user) {
+        user.setFirstName(FNAMES[new Random().nextInt(FNAMES.length)]);
+        user.setLastName(LNAMES[new Random().nextInt(LNAMES.length)]);
+        user.setAge(new Random().nextInt(20)+10);
+        repository.saveAndFlush(user);
+        return "Saved: "+user.toString();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/user/{id}",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
+    public String updateUser(@RequestBody User user, @PathVariable("id")Integer id) {
+        String result="User "+id+" chenged<br>";
+        user.setId(id);
+        result+="Data before: "+repository.findById(id).get().toString()+"<br>";
+        repository.save(user);
+        result+="Data after: "+user.toString()+"<br>";
+        return result;
+    }
+    
+    @RequestMapping(value = "/user/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public String deleteUser(@PathVariable("id")Integer id) {
+        String result="Deleted: "+repository.findById(id).get().toString();
+        repository.deleteById(id);
+        return result;
+    }
+    
+    
 }

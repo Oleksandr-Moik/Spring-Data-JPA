@@ -23,10 +23,11 @@ public class User {
     private Integer  age;
 
     public User() {
-        
+        super();
     }
 
     public User(Integer id, String firstName,String lastName, Integer age) {
+        super();
         this.id=id;
         this.firstName=firstName;
         this.lastName=lastName;
