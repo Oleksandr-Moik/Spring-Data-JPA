@@ -75,7 +75,6 @@ public class MainController {
     
     @RequestMapping(value = "/user/{id}",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteUser(@PathVariable("id")Integer id) {
-        
         Optional<User> student = repository.findById(id);
         
         if (student.isPresent()) {
