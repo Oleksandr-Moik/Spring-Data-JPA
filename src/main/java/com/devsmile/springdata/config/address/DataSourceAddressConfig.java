@@ -15,6 +15,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.devsmile.springdata.config.Constants;
+
 @Configuration
 @EnableJpaRepositories(
         basePackages = "com.devsmile.springdata.dao.address", entityManagerFactoryRef = "addressEntityManager",
@@ -39,12 +41,15 @@ public class DataSourceAddressConfig {
     public LocalContainerEntityManagerFactoryBean addressEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(addressDataSourse());
-        em.setPackagesToScan("com.devsmile.springdata.model.user");
+
+        em.setPackagesToScan(new String[] { Constants.PACKAGE_ENTITIES_ADDRESS });
+        em.setPersistenceUnitName(Constants.JPA_UNIT_ADDRESS);
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
 
         HashMap<String, Object> properties = new HashMap<>();
+
         properties.put("hibernate.dialect", environment.getProperty("spring.jpa.properties.hibernate.dialect"));
         properties.put("hibenate.show-sql", environment.getProperty("spring.jpa.show-sql"));
 

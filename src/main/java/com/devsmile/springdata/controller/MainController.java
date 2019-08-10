@@ -46,13 +46,13 @@ public class MainController {
     ///////////////////////////////////////////////////////////////
     /** USER **/
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getAllUsers() {
+    public String getAllUsers() {
         List<User> list = userRepository.findAll();
         String result = "";
         for (User user : list) {
             result += user.toString();
         }
-        return list;
+        return result;
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
