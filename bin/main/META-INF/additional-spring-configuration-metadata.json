@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "database2.datasource1.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'database2.datasource1.driver-class-name'"
+  },
+  {
+    "name": "database2.datasource1.url",
+    "type": "java.lang.String",
+    "description": "A description for 'database2.datasource1.url'"
+  },
+  {
+    "name": "database2.datasource1.username",
+    "type": "java.lang.String",
+    "description": "A description for 'database2.datasource1.username'"
+  },
+  {
+    "name": "database2.datasource1.password",
+    "type": "java.lang.String",
+    "description": "A description for 'database2.datasource1.password'"
+  },
+  {
+    "name": "database1.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.password'"
+  },
+  {
+    "name": "database1.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.username'"
+  },
+  {
+    "name": "database1.datasource.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.driver-class-name'"
+  },
+  {
+    "name": "database1.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.url'"
+  }
+]}{
+    "name": "database1.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.url'"
+  }
+]}

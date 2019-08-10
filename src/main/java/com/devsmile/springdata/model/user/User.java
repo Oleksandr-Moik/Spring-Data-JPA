@@ -1,4 +1,4 @@
-package com.devsmile.springdata.model;
+package com.devsmile.springdata.model.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,12 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "user")
+@Entity(name = "User")
+@Table(name = "User")
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
     @Column(name = "firstName")
@@ -20,7 +20,11 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
     @Column(name = "age")
-    private Integer  age;
+    private Integer age;
+
+    public User() {
+        super();
+    }
 
     public User(Integer id, String firstName, String lastName, Integer age) {
         super();
@@ -64,7 +68,7 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User [id=%d, firstName=%s, lastName=%s, age=%d]", id,firstName,lastName,age);
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + "]";
     }
 
     @Override
