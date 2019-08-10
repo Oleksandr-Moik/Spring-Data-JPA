@@ -16,17 +16,16 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.devsmile.springdata.config.Constants;
-
 @Configuration
-@EnableJpaRepositories(basePackages = "com.devsmile.springdata.dao.user", 
-                       entityManagerFactoryRef = "userEntityManager", 
-                       transactionManagerRef = "userTransactionManager")
+@EnableJpaRepositories(
+        basePackages = "com.devsmile.springdata.dao.user", entityManagerFactoryRef = "userEntityManager",
+        transactionManagerRef = "userTransactionManager"
+)
 public class DataSourceUserConfig {
 
     @Autowired
     private Environment environment;
-    
+
     @Bean
     @Primary
     public DataSource userDataSourse() {
@@ -37,30 +36,27 @@ public class DataSourceUserConfig {
         dataSource.setPassword(environment.getProperty("database1.datasource.password"));
         return dataSource;
     }
-    
+
     @Bean
     @Primary
     public LocalContainerEntityManagerFactoryBean userEntityManager() {
-        LocalContainerEntityManagerFactoryBean em=new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(userDataSourse());
-        
-        em.setPackagesToScan(new String[] {Constants.PACKAGE_ENTITIES_USER});
-        em.setPersistenceUnitName(Constants.JPA_UNIT_USER);
-        
+        em.setPackagesToScan("com.devsmile.springdata.model.address");
+
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        
+
         HashMap<String, Object> properties = new HashMap<>();
-        
         properties.put("hibernate.dialect", environment.getProperty("spring.jpa.properties.hibernate.dialect"));
         properties.put("hibenate.show-sql", environment.getProperty("spring.jpa.show-sql"));
-        
+
         em.setJpaPropertyMap(properties);
         em.afterPropertiesSet();
-        
+
         return em;
     }
-    
+
     @Bean
     @Primary
     public PlatformTransactionManager userTransactionManager() {

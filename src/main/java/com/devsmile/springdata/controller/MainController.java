@@ -36,23 +36,23 @@ public class MainController {
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public String homeMap(HttpServletRequest request) {
-        String html="";
-        html+="<h1>Main page</h1>";
-        html+=String.format("<h3><a href=\"%suser\">%s</a></h3>", request.getRequestURL(),"Show all users");
-        html+=String.format("<h3><a href=\"%saddress\">%s</a></h3>", request.getRequestURL(),"Show all adresses");
+        String html = "";
+        html += "<h1>Main page</h1>";
+        html += String.format("<h3><a href=\"%suser\">%s</a></h3>", request.getRequestURL(), "Show all users");
+        html += String.format("<h3><a href=\"%saddress\">%s</a></h3>", request.getRequestURL(), "Show all adresses");
         return html;
     }
-    
-///////////////////////////////////////////////////////////////
-                        /** USER **/
+
+    ///////////////////////////////////////////////////////////////
+    /** USER **/
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAllUsers() {
+    public List<User> getAllUsers() {
         List<User> list = userRepository.findAll();
         String result = "";
         for (User user : list) {
             result += user.toString();
         }
-        return result;
+        return list;
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -102,9 +102,10 @@ public class MainController {
         } else
             return String.format("User with id %d are not finded.", id);
     }
-///////////////////////////////////////////////////////////////
-                    /** ADDRESS **/
-    
+
+    ///////////////////////////////////////////////////////////////
+    /** ADDRESS **/
+
     @RequestMapping(value = "/address", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllAdresses() {
         List<Address> list = addressRepository.findAll();
