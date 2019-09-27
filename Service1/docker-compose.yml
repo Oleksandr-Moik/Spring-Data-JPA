@@ -3,19 +3,15 @@ version: '3.3'
 services:
   service1-app-container:
     image: service:v1
-    volumes:
-      - /data/springboot-service1
+    build: ./
     ports:
       - '8088:8080'
-    expose:
-      - '8088'
     depends_on: 
       - my-sql-db
       
       
   my-sql-db:
     image: mysql:5.7_db
-#    restart: always
     environment:
       MYSQL_DATABASE: 'Docker_DB'
       MYSQL_USER: 'DockerUser'
@@ -24,8 +20,6 @@ services:
     container_name: mysql_db
     ports:
       - '3308:3306'
-#    expose:
-#      - '3308'
-#    volumes:
-#      - my-sql-db:/var/lib/mysql
+    volumes:
+      - /home/mydocker/mysql:/var/lib/mysql
     
