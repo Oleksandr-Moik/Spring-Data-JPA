@@ -1,0 +1,45 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.8.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.example'
+version = 'ver-0.0.1'
+
+sourceCompatibility = '12'
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+	//implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'org.hibernate:hibernate-entitymanager'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.9'
+	  
+	compileOnly 'org.projectlombok:lombok:1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'	
+	
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+springBoot {
+    mainClassName = 'com.example.service1.Servise1Application'
+    buildInfo()
+}

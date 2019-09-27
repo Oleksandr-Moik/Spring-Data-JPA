@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "database1.datasource.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.driver-class-name'"
+  },
+  {
+    "name": "database1.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.username'"
+  },
+  {
+    "name": "database1.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.url'"
+  },
+  {
+    "name": "database1.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'database1.datasource.password'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  },
+  {
+    "name": "spring.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.hibernate.dialect'"
+  }
+]}
