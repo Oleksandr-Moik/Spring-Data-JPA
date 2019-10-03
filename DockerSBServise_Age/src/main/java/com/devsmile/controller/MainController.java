@@ -35,12 +35,10 @@ public class MainController { // AGE 3 //
         }
     }
 
+    @ResponseBody
     @RequestMapping(value = "/user/", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
     public ResponseEntity<User> insertUser(@RequestBody User user) {
-        User newUser = new User();
-        newUser.setAge(user.getAge());
-        
-        userRepository.save(newUser);
+        User newUser = userRepository.save(user);
         
         log.info("Service POST 3 age: {}",newUser.toString());
         

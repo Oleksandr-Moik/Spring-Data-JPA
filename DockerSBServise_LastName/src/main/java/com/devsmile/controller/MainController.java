@@ -52,6 +52,7 @@ public class MainController { // LastName 2 //
         }
     }
 
+    @ResponseBody
     @RequestMapping(value = "/user", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
     public ResponseEntity<User> insertUser(@RequestBody User user) {
 
@@ -61,9 +62,9 @@ public class MainController { // LastName 2 //
         User newUser = response.getBody();
         newUser.setLastName(user.getLastName());
         
-        userRepository.save(newUser);
-        
         log.info("Service POST 2 lastName: {}",newUser.toString());
+        
+        userRepository.save(newUser);
         
         return ResponseEntity.ok(newUser);
     }
