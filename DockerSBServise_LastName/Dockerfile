@@ -1,4 +1,4 @@
 FROM openjdk:12
-ADD . .
-EXPOSE 8080
-ENTRYPOINT ["./gradlew","bootrun"]
+VOLUME /tmp
+COPY build/libs/*.jar app.jar 
+ENTRYPOINT ["java","-jar","/app.jar"]

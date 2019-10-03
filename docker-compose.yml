@@ -1,14 +1,22 @@
 version: '3.7'
 
+networks:
+  default-net:
+    name: service_user_net
+
 services:
+
   service-firsname:
     container_name: FirstName
     image: service-firsname:v1
     build: ./DockerSBServise_FirstName/
     ports:
-      - '8083:8080'
+      - '8081:8080'
     depends_on:
+      - service-lastname 
       - my-sql-db
+    networks:
+      - default-net
      
       
   service-lastname:
@@ -18,17 +26,22 @@ services:
     ports:
       - '8082:8080'
     depends_on:
-      - service-firsname
+      - service-age
+      - my-sql-db
+    networks:
+      - default-net
     
   service-age:
     container_name: Age
     image: service-age:v1
     build: ./DockerSBServise_Age
     ports:
-      - '8081:8080'
+      - '8083:8080'
     depends_on:
-      - service-lastname 
-    
+      - my-sql-db
+    networks:
+      - default-net
+
   my-sql-db:
     image: mysql:5.7
     environment:
@@ -39,6 +52,8 @@ services:
     container_name: db_mysql
     ports:
       - '3308:3306'
+    networks:
+      - default-net
     volumes:
       - /home/mydocker/mysql:/var/lib/mysql
     
