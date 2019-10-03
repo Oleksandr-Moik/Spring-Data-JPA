@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,9 +41,18 @@ public class MainController { // FirstName 1 //
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = { "text/plain", "application/json" })
-    public User insertUser(@RequestBody User user) {
-        return userRepository.saveAndFlush(user);
+    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
+    public ResponseEntity<User> insertUser(@RequestBody User user) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<User> response = restTemplate.postForEntity("http://LastName:8080/user/", user, User.class);
+        
+        User newUser = response.getBody();
+        newUser.setFirstName(user.getFirstName());
+        
+        userRepository.saveAndFlush(newUser);
+        
+        log.info("Service GET 1 FirstName: {}",newUser.toString());
+        
+        return ResponseEntity.ok(newUser);
     }
 }

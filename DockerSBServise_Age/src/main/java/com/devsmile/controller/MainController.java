@@ -28,16 +28,22 @@ public class MainController { // AGE 3 //
             Integer age = userRepository.findById(id).get().getAge();
             User user = new User(id, "", "", age);
             log.info("Service GET 3 age: {}",user.toString());
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok(user);
         } else {
             log.error("Service GET 3 age: user with id={} not found.",id);
             return ResponseEntity.badRequest().body(null);
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
-    public User insertUser(@RequestBody User user) {
-        return userRepository.saveAndFlush(user);
+    @RequestMapping(value = "/user/", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
+    public ResponseEntity<User> insertUser(@RequestBody User user) {
+        User newUser = new User();
+        newUser.setAge(user.getAge());
+        
+        userRepository.save(newUser);
+        
+        log.info("Service POST 3 age: {}",newUser.toString());
+        
+        return ResponseEntity.ok(newUser);
     }
 }

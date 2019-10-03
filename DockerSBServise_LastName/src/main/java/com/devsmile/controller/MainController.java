@@ -52,9 +52,19 @@ public class MainController { // LastName 2 //
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = { "text/plain", "application/json" })
-    public User insertUser(@RequestBody User user) {
-        return userRepository.saveAndFlush(user);
+    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
+    public ResponseEntity<User> insertUser(@RequestBody User user) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<User> response = restTemplate.postForEntity("http://Age:8080/user/", user, User.class);
+        
+        User newUser = response.getBody();
+        newUser.setLastName(user.getLastName());
+        
+        userRepository.save(newUser);
+        
+        log.info("Service POST 2 lastName: {}",newUser.toString());
+        
+        return ResponseEntity.ok(newUser);
     }
 }
