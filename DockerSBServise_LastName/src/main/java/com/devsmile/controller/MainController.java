@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.devsmile.dao.UserRepository;
-import com.devsmile.model.User;
+import com.devsmile.model.entity.UserEntity;
+import com.devsmile.model.entity.UserEntity.UserBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,7 @@ public class MainController { // LastName 2 //
     private UserRepository userRepository;
     
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<UserEntity> getUserById(@PathVariable("id") Integer id) throws Exception{
         if (userRepository.findById(id).isPresent()) {
             
             HttpHeaders httpHeaders= new HttpHeaders();
@@ -38,10 +39,9 @@ public class MainController { // LastName 2 //
             HttpEntity<String> httpEntity= new HttpEntity<String>("parameters", httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
             
-            ResponseEntity<User> response = restTemplate.exchange("http://Age:8080/user/"+id, HttpMethod.GET, httpEntity, User.class);
+            ResponseEntity<UserEntity> response = restTemplate.exchange("http://Age:8080/user/"+id, HttpMethod.GET, httpEntity, UserEntity.class);
             
-            User user = response.getBody();
-            user.setLastName(userRepository.findById(id).get().getLastName());
+            UserEntity user = response.getBody().builder().lastName(userRepository.findById(id).get().getLastName()).build();
             
             log.info("Service GET 2 lastName: {}",user.toString());
             
@@ -54,12 +54,12 @@ public class MainController { // LastName 2 //
 
     @ResponseBody
     @RequestMapping(value = "/user", method = RequestMethod.POST, produces = { "text/plain", "application/json" })
-    public ResponseEntity<User> insertUser(@RequestBody User user) {
-
+    public ResponseEntity<UserEntity> insertUser(@RequestBody UserEntity user) {
+                
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> response = restTemplate.postForEntity("http://Age:8080/user/", user, User.class);
+        ResponseEntity<UserEntity> response = restTemplate.postForEntity("http://Age:8080/user/", user, UserEntity.class);
         
-        User newUser = response.getBody();
+        UserEntity newUser = response.getBody();
         newUser.setLastName(user.getLastName());
         
         log.info("Service POST 2 lastName: {}",newUser.toString());
