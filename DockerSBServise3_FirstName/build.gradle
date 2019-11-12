@@ -10,7 +10,7 @@ apply plugin: 'idea'
 group = 'com.devsmile'
 version = 'version-0.0.1'
 
-sourceCompatibility = '12'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
